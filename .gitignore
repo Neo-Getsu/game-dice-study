@@ -5,5 +5,5 @@
 .npmrc
 README.md
 .stylelintrc.json
-.idea
-*.map
+/.idea/
+/css/styles.css.map
