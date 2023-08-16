@@ -51,10 +51,16 @@ class Player{
     //Hold Score
     holdScore(){
         this.globalScore += this.currentScore;
-        console.log(this.globalScore)
-        if (this.globalScore >= 100){
+
+        if (this.globalScore >= 5){
+         //   this.winningAlert()
             console.log("GG LA WIN")
-            this.id === 1 ? globalOne.textContent = this.globalScore : globalTwo.textContent = this.globalScore;
+            this.id === 1 ? (
+                globalOne.textContent = this.globalScore,
+                globalOne.style.border=  "2px solid red"
+                )
+                : globalTwo.textContent = this.globalScore,
+                    globalTwo.style.border=  "2px solid red"
         }
         else {
             this.currentScore = 0;
@@ -92,9 +98,21 @@ class Player{
         globalTwo.textContent = 0;
     }
 
+    /*
     winningAlert(){
+        let divAlert = document.querySelector("#testAlert")
+        let x = document.createElement("div")
 
+        x.innerHTML = `
+           <div id='alertCustom' class="alertCustom">
+           <h1> PLAYER X A GAGNER LA PARTI</h1>
+           <button class='test'>New Game</button>
+         </div>
+        `
+        divAlert.appendChild(x)
     }
+
+     */
 }
 
 
