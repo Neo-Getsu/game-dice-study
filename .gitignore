@@ -5,6 +5,5 @@
 utils/*
 README.md
 utils/.stylelintrc.json
-
 /src/css/styles.css.map
 .idea/*
