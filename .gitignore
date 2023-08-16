@@ -2,9 +2,9 @@
 /node_modules/
 /scss/
 /dist/
-utils/.npmrc
+utils/*
 README.md
 utils/.stylelintrc.json
-.idea/
-/src/css/styles.css.map
 
+/src/css/styles.css.map
+.idea/*
