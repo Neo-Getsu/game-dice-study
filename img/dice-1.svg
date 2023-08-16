@@ -11,7 +11,7 @@
   </rdf:RDF>
  </metadata>
  <g transform="translate(0 -922.52)" stroke="#000" stroke-linecap="square">
-  <rect x="10" y="932.52" width="180" height="180" rx="24" ry="24" fill="#000" stroke-width="9.6"/>
-  <circle cx="100" cy="1022.5" fill="#fff" r="20"/>
+  <rect x="10" y="932.52" width="180" height="180" rx="24" ry="24" fill="#fff" stroke-width="9.6"/>
+  <circle cx="100" cy="1022.5" fill="#000" r="20"/>
  </g>
 </svg>

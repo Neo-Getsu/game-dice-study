@@ -19,9 +19,10 @@ const currentOne = document.querySelector(".current-one")
 const currentTwo = document.querySelector(".current-two")
 const globalOne = document.querySelector(".global-one")
 const globalTwo = document.querySelector(".global-two")
+const Dice = document.querySelector('.img-dice')
 
 
-/* #########|-- ${Class? } -- ########  */
+/* #########|-- ${Class } -- ########  */
 
 class Player{
     constructor(id, name) {
@@ -33,24 +34,13 @@ class Player{
     }
     //Roll dice methode
     rollDice(){
-
     const diceValue =  randomizeDice()
+    Dice.src = `img/dice-${diceValue}.svg`
         if(diceValue === 1){
 
             this.currentScore = 0;
             this.active = false;
-           if (this.id === 1){
-               playerTwo.active = true
-               activePlayerTwo.classList.add("active")
-               activePlayerOne.classList.remove("active")
-               currentOne.textContent = this.currentScore;
-           }
-           else {
-               playerOne.active = true
-               activePlayerOne.classList.add("active")
-               activePlayerTwo.classList.remove("active")
-               currentTwo.textContent = this.currentScore;
-           }
+            this.endTours()
         }
         else {
             this.currentScore += diceValue
@@ -69,33 +59,29 @@ class Player{
         else {
             this.currentScore = 0;
             this.active = false;
-            if (this.id === 1){
-                playerTwo.active = true
-                activePlayerTwo.classList.add("active")
-                activePlayerOne.classList.remove("active")
-                globalOne.textContent = this.globalScore
-                currentOne.textContent = 0;
-
-
-            }
-            else {
-                playerOne.active = true
-                activePlayerOne.classList.add("active")
-                activePlayerTwo.classList.remove("active")
-                globalTwo.textContent = this.globalScore;
-                currentTwo.textContent = 0;
-
-            }
-
-
+            this.endTours()
         }
         return this.globalScore
     }
     endTours(){
+        if (this.id === 1){
+            playerTwo.active = true
+            activePlayerTwo.classList.add("active")
+            activePlayerOne.classList.remove("active")
+            globalOne.textContent = this.globalScore
+            currentOne.textContent = 0;
 
+
+        }
+        else {
+            playerOne.active = true
+            activePlayerOne.classList.add("active")
+            activePlayerTwo.classList.remove("active")
+            globalTwo.textContent = this.globalScore;
+            currentTwo.textContent = 0;
+        }
 
     }
-
     resetPlayer() {
         this.currentScore = 0;
         this.globalScore = 0;
@@ -105,6 +91,10 @@ class Player{
        globalOne.textContent = 0;
         globalTwo.textContent = 0;
     }
+
+    winningAlert(){
+
+    }
 }
 
 
@@ -112,14 +102,9 @@ class Player{
 const playerOne = new Player(1, "Player One");
 const playerTwo = new Player(2, "Player Two");
 
+
+
 /* #########|-- ${Function} -- ########  */
-
-
-
-
-
-
-
 
 // Fonction pour choisir aléatoirement quel joueur commence
 function chooseStartingPlayer() {
@@ -148,6 +133,10 @@ function randomizeDice (){
     let randomDice = Math.floor(Math.random() * (7-1)) +1  ;
     return randomDice
 }
+
+//function pour update le dé.
+
+
 
 
 
