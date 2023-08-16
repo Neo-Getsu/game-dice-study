@@ -1,19 +1,13 @@
 /* #########|-- ${DECLARATION DES VARIABLE} -- ########  */
 
-//score
-let globalScoreP1 =0, globalScoreP2=0, currentScoreP1=0, currentScoreP2=0;
-
 //Btn game
 const btnNewGame = document.querySelector(".newGameBtn");
 const btnRollDice = document.querySelector('.rollDice');
 const btnHoldScore = document.querySelector(".holdDice")
-
-
 //Active players
 const activePlayerOne = document.querySelector('.one')
 const activePlayerTwo = document.querySelector('.two')
 const players = [0, 1];
-
 //Score Dom
 const currentOne = document.querySelector(".current-one")
 const currentTwo = document.querySelector(".current-two")
@@ -21,9 +15,7 @@ const globalOne = document.querySelector(".global-one")
 const globalTwo = document.querySelector(".global-two")
 const Dice = document.querySelector('.img-dice')
 
-
 /* #########|-- ${Class } -- ########  */
-
 class Player{
     constructor(id, name) {
         this.id = id;
@@ -64,6 +56,7 @@ class Player{
         }
         return this.globalScore
     }
+    //Finish round
     endTours(){
         if (this.id === 1){
             playerTwo.active = true
@@ -83,6 +76,7 @@ class Player{
         }
 
     }
+    //reset stat players
     resetPlayer() {
         this.currentScore = 0;
         this.globalScore = 0;
@@ -92,7 +86,7 @@ class Player{
        globalOne.textContent = 0;
         globalTwo.textContent = 0;
     }
-
+    // Showing alert
     winningAlert(){
 
         let x = document.createElement("div")
@@ -100,23 +94,25 @@ class Player{
         x.innerHTML = `
            <div id='alertCustom' class="alertCustom">
            <h5> <span id="win-name">${this.name}</span> a gané !!!! </h5>
-           <button class='test btn-game'>New Game</button>
+           <button class='newBtnTwo btn-game'>New Game</button>
          </div>
         `
        document.body.prepend(x)
+        document.querySelector('.newBtnTwo').addEventListener('click', ()=> {
+            domReset()
+            x.remove()
+            chooseStartingPlayer()
+        })
     }
 }
-
 
 //Creation Joueur
 const playerOne = new Player(1, "Player One");
 const playerTwo = new Player(2, "Player Two");
 
-
-
 /* #########|-- ${Function} -- ########  */
 
-// Fonction pour choisir aléatoirement quel joueur commence
+// Random Start Player
 function chooseStartingPlayer() {
     const randomIndex = Math.floor(Math.random() * players.length);
 
@@ -137,31 +133,14 @@ function chooseStartingPlayer() {
     }
     }
 
-
-//fonction générer un nombre aléatoire entre 1&6
+//Random Dice value
 function randomizeDice (){
     let randomDice = Math.floor(Math.random() * (7-1)) +1  ;
     return randomDice
 }
 
-//function pour update le dé.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* #########|-- ${Listeners} -- ########  */
-//for start the game !
-btnNewGame.addEventListener('click', () => {
+//Dom Reset
+function domReset(){
     if(activePlayerOne.classList.contains("active")){
         activePlayerOne.classList.remove("active")
     }
@@ -171,25 +150,46 @@ btnNewGame.addEventListener('click', () => {
 
     playerOne.resetPlayer()
     playerTwo.resetPlayer()
-    chooseStartingPlayer()
+}
+
+/* #########|-- ${Listeners} -- ########  */
+//Load Dom Element
+
+document.addEventListener("DOMContentLoaded", (event)=> {
+// Init Game
+    btnNewGame.addEventListener('click', () => {
+        domReset()
+        playerOne.resetPlayer()
+        playerTwo.resetPlayer()
+        chooseStartingPlayer()
+
+    })
+
+
+//Roll the dice
+    btnRollDice.addEventListener('click', () => {
+
+        if((!playerOne.active) && !playerTwo.active) {
+            alert("Vous devez cliquer sur New Game pour commencer la partie ! ")
+        }
+        else {
+            const activePlayer =  playerOne.active ? playerOne : playerTwo;
+            activePlayer.rollDice()
+        }
+    })
+
+
+//Hold Score & next player
+    btnHoldScore.addEventListener('click', () => {
+        const activePlayer =  playerOne.active ? playerOne : playerTwo;
+        activePlayer.holdScore()
+
+    })
 
 })
-btnRollDice.addEventListener('click', () => {
-
-    if((!playerOne.active) && !playerTwo.active) {
-       // En cas de non joueur selectionner.
-    }
-const activePlayer =  playerOne.active ? playerOne : playerTwo;
-    const diceResult = activePlayer.rollDice()
 
 
-})
 
-btnHoldScore.addEventListener('click', () => {
-    const activePlayer =  playerOne.active ? playerOne : playerTwo;
-    activePlayer.holdScore()
-
-})
 
 
 
