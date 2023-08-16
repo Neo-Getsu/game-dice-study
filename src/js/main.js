@@ -52,15 +52,10 @@ class Player{
     holdScore(){
         this.globalScore += this.currentScore;
 
-        if (this.globalScore >= 5){
-         //   this.winningAlert()
+        if (this.globalScore >=20){
+            this.winningAlert()
             console.log("GG LA WIN")
-            this.id === 1 ? (
-                globalOne.textContent = this.globalScore,
-                globalOne.style.border=  "2px solid red"
-                )
-                : globalTwo.textContent = this.globalScore,
-                    globalTwo.style.border=  "2px solid red"
+            this.id === 1 ? globalOne.textContent = this.globalScore : globalTwo.textContent = this.globalScore;
         }
         else {
             this.currentScore = 0;
@@ -98,21 +93,18 @@ class Player{
         globalTwo.textContent = 0;
     }
 
-    /*
     winningAlert(){
-        let divAlert = document.querySelector("#testAlert")
+
         let x = document.createElement("div")
 
         x.innerHTML = `
            <div id='alertCustom' class="alertCustom">
-           <h1> PLAYER X A GAGNER LA PARTI</h1>
-           <button class='test'>New Game</button>
+           <h5> <span id="win-name">${this.name}</span> a gané !!!! </h5>
+           <button class='test btn-game'>New Game</button>
          </div>
         `
-        divAlert.appendChild(x)
+       document.body.prepend(x)
     }
-
-     */
 }
 
 
