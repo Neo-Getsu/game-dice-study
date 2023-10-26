@@ -36,7 +36,7 @@ class Player{
             notif.classList.add("notification");
             document.body.appendChild(notif)
             showMessageNotification(notif,`Vous avez fait le score: 1 -> Vous perdez , c'est au joueur suivant de jouer. `)
-            this.currentScore = 5;
+            this.currentScore = 0;
             this.active = false;
             this.endTours()
         }
