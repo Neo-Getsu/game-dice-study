@@ -3,7 +3,9 @@
 //Btn game
 const btnNewGame = document.querySelector(".newGameBtn");
 const btnRollDice = document.querySelector('.rollDice');
+console.log(btnRollDice.style.pointerEvents)
 const btnHoldScore = document.querySelector(".holdDice")
+const btnToSafety = [btnHoldScore, btnRollDice]
 //Active players
 const activePlayerOne = document.querySelector('.one')
 const activePlayerTwo = document.querySelector('.two')
@@ -14,7 +16,7 @@ const currentTwo = document.querySelector(".current-two")
 const globalOne = document.querySelector(".global-one")
 const globalTwo = document.querySelector(".global-two")
 const Dice = document.querySelector('.img-dice')
-
+console.log("Lets go reprendre")
 /* #########|-- ${Class } -- ########  */
 class Player{
     constructor(id, name) {
@@ -29,7 +31,11 @@ class Player{
     const diceValue =  randomizeDice()
     Dice.src = `img/dice-${diceValue}.svg`
         if(diceValue === 1){
-
+            const notif = document.createElement("div");
+            console.log(notif)
+            notif.classList.add("notification");
+            document.body.appendChild(notif)
+            showMessageNotification(notif,`Vous avez fait le score: 1 -> Vous perdez , c'est au joueur suivant de jouer. `)
             this.currentScore = 0;
             this.active = false;
             this.endTours()
@@ -86,6 +92,10 @@ class Player{
        globalOne.textContent = 0;
         globalTwo.textContent = 0;
     }
+
+
+
+
     // Showing alert
     winningAlert(){
 
@@ -98,6 +108,9 @@ class Player{
          </div>
         `
        document.body.prepend(x)
+
+
+        lockUnlock(btnToSafety, 'lock')
         document.querySelector('.newBtnTwo').addEventListener('click', ()=> {
             domReset()
             x.remove()
@@ -115,7 +128,7 @@ const playerTwo = new Player(2, "Player Two");
 // Random Start Player
 function chooseStartingPlayer() {
     const randomIndex = Math.floor(Math.random() * players.length);
-
+    lockUnlock(btnToSafety, 'unlock')
     switch ( randomIndex) {
         case 0:
             activePlayerOne.classList.add("active")
@@ -168,6 +181,7 @@ document.addEventListener("DOMContentLoaded", (event)=> {
 
 //Roll the dice
     btnRollDice.addEventListener('click', () => {
+        console.log("here  "+btnRollDice.style.pointerEvents)
 
         if((!playerOne.active) && !playerTwo.active) {
             alert("Vous devez cliquer sur New Game pour commencer la partie ! ")
@@ -187,6 +201,37 @@ document.addEventListener("DOMContentLoaded", (event)=> {
     })
 
 })
+
+
+const lockUnlock = (btnSafety, action) => {
+
+    if(action === 'lock'){
+        btnSafety.forEach((b)=> {
+            b.style.pointerEvents="none";
+
+            b.style.opacity = "0.5"
+        })
+    }   else {
+        btnSafety.forEach((b)=> {
+            b.style.pointerEvents="auto";
+
+            b.style.opacity = "1"
+        })
+    }
+
+}
+
+
+
+    const showMessageNotification = (notif, message) => {
+        notif.innerText = message;
+        notif.style.opacity = 1;
+
+        setTimeout(()=> {
+            notif.style.opacity=0
+        }, 4000)
+    }
+
 
 
 
