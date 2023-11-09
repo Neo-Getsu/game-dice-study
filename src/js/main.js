@@ -10,13 +10,14 @@ const btnToSafety = [btnHoldScore, btnRollDice]
 const activePlayerOne = document.querySelector('.one')
 const activePlayerTwo = document.querySelector('.two')
 const players = [0, 1];
+
 //Score Dom
 const currentOne = document.querySelector(".current-one")
 const currentTwo = document.querySelector(".current-two")
 const globalOne = document.querySelector(".global-one")
 const globalTwo = document.querySelector(".global-two")
 const Dice = document.querySelector('.img-dice')
-console.log("Lets go reprendre")
+
 /* #########|-- ${Class } -- ########  */
 class Player{
     constructor(id, name) {
@@ -166,6 +167,31 @@ function domReset(){
     playerTwo.resetPlayer()
 }
 
+const lockUnlock = (btnSafety, action) => {
+
+    if(action === 'lock'){
+        btnSafety.forEach((b)=> {
+            b.style.pointerEvents="none";
+
+            b.style.opacity = "0.5"
+        })
+    }   else {
+        btnSafety.forEach((b)=> {
+            b.style.pointerEvents="auto";
+
+            b.style.opacity = "1"
+        })
+    }
+
+}
+const showMessageNotification = (notif, message) => {
+    notif.innerText = message;
+    notif.style.opacity = 1;
+
+    setTimeout(()=> {
+        notif.remove()
+    }, 4000)
+}
 /* #########|-- ${Listeners} -- ########  */
 //Load Dom Element
 
@@ -203,35 +229,6 @@ document.addEventListener("DOMContentLoaded", (event)=> {
 
 })
 
-
-const lockUnlock = (btnSafety, action) => {
-
-    if(action === 'lock'){
-        btnSafety.forEach((b)=> {
-            b.style.pointerEvents="none";
-
-            b.style.opacity = "0.5"
-        })
-    }   else {
-        btnSafety.forEach((b)=> {
-            b.style.pointerEvents="auto";
-
-            b.style.opacity = "1"
-        })
-    }
-
-}
-
-
-
-    const showMessageNotification = (notif, message) => {
-        notif.innerText = message;
-        notif.style.opacity = 1;
-
-        setTimeout(()=> {
-            notif.remove()
-        }, 4000)
-    }
 
 
 
