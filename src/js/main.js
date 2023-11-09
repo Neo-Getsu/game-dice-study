@@ -3,7 +3,7 @@
 //Btn game
 const btnNewGame = document.querySelector(".newGameBtn");
 const btnRollDice = document.querySelector('.rollDice');
-console.log(btnRollDice.style.pointerEvents)
+
 const btnHoldScore = document.querySelector(".holdDice")
 const btnToSafety = [btnHoldScore, btnRollDice]
 //Active players
@@ -32,10 +32,10 @@ class Player{
     Dice.src = `img/dice-${diceValue}.svg`
         if(diceValue === 1){
             const notif = document.createElement("div");
-            console.log(notif)
             notif.classList.add("notification");
             document.body.appendChild(notif)
             showMessageNotification(notif,`Vous avez fait le score: 1 -> Vous perdez , c'est au joueur suivant de jouer. `)
+            //setTimeout(() => notif.remove(), 5000)
             this.currentScore = 0;
             this.active = false;
             this.endTours()
@@ -99,21 +99,22 @@ class Player{
     // Showing alert
     winningAlert(){
 
-        let x = document.createElement("div")
+       const winMessage = document.createElement("div")
 
-        x.innerHTML = `
-           <div id='alertCustom' class="alertCustom">
-           <h5> <span id="win-name">${this.name}</span> a gané !!!! </h5>
-           <button class='newBtnTwo btn-game'>New Game</button>
+
+        winMessage.innerHTML = `
+           <div id="alertCustom">
+            <span id="win-name">${this.name}</span> a gané !!!!  
+           <button class='newBtnTwo btn-game opac'>New Game</button>
          </div>
         `
-       document.body.prepend(x)
+       document.body.appendChild(winMessage)
 
 
         lockUnlock(btnToSafety, 'lock')
         document.querySelector('.newBtnTwo').addEventListener('click', ()=> {
             domReset()
-            x.remove()
+            winMessage.remove()
             chooseStartingPlayer()
         })
     }
@@ -181,7 +182,7 @@ document.addEventListener("DOMContentLoaded", (event)=> {
 
 //Roll the dice
     btnRollDice.addEventListener('click', () => {
-        console.log("here  "+btnRollDice.style.pointerEvents)
+
 
         if((!playerOne.active) && !playerTwo.active) {
             alert("Vous devez cliquer sur New Game pour commencer la partie ! ")
@@ -228,7 +229,7 @@ const lockUnlock = (btnSafety, action) => {
         notif.style.opacity = 1;
 
         setTimeout(()=> {
-            notif.style.opacity=0
+            notif.remove()
         }, 4000)
     }
 
