@@ -67,9 +67,8 @@ class Player{
     holdScore(){
         this.globalScore += this.currentScore;
 
-        if (this.globalScore >=20){
+        if (this.globalScore >=100){
             this.winningAlert()
-            console.log("GG LA WIN")
             this.id === 1 ? globalOne.textContent = this.globalScore : globalTwo.textContent = this.globalScore;
         }
         else {
