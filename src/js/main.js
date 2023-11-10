@@ -3,6 +3,13 @@
 //Btn game
 const btnNewGame = document.querySelector(".newGameBtn");
 const btnRollDice = document.querySelector('.rollDice');
+let playerNamesCustom = []
+
+const p1Fields= document.querySelectorAll(".playerName-FIELDS")[0]
+const p2Fields = document.querySelectorAll(".playerName-FIELDS")[1]
+
+const btnP1Name = document.querySelectorAll(".playerName-BTN")[0]
+const btnP2Name = document.querySelectorAll(".playerName-BTN")[1]
 
 const btnHoldScore = document.querySelector(".holdDice")
 const btnToSafety = [btnHoldScore, btnRollDice]
@@ -17,20 +24,18 @@ const currentTwo = document.querySelector(".current-two")
 const globalOne = document.querySelector(".global-one")
 const globalTwo = document.querySelector(".global-two")
 const Dice = document.querySelector('.img-dice')
-
-/* #########|-- ${Class } -- ########  */
 class Player{
     constructor(id, name) {
         this.id = id;
-        this.name = name;
+        this.name = "player";
         this.currentScore= 0;
         this.globalScore = 0;
         this.active = false
     }
     //Roll dice methode
     rollDice(){
-    const diceValue =  randomizeDice()
-    Dice.src = `img/dice-${diceValue}.svg`
+        const diceValue =  randomizeDice()
+        Dice.src = `img/dice-${diceValue}.svg`
         if(diceValue === 1){
             const notif = document.createElement("div");
             notif.classList.add("notification");
@@ -90,7 +95,7 @@ class Player{
         this.active = false;
         currentOne.textContent = 0;
         currentTwo.textContent = 0;
-       globalOne.textContent = 0;
+        globalOne.textContent = 0;
         globalTwo.textContent = 0;
     }
 
@@ -100,7 +105,7 @@ class Player{
     // Showing alert
     winningAlert(){
 
-       const winMessage = document.createElement("div")
+        const winMessage = document.createElement("div")
 
 
         winMessage.innerHTML = `
@@ -109,7 +114,7 @@ class Player{
            <button class='newBtnTwo btn-game opac'>New Game</button>
          </div>
         `
-       document.body.appendChild(winMessage)
+        document.body.appendChild(winMessage)
 
 
         lockUnlock(btnToSafety, 'lock')
@@ -120,10 +125,32 @@ class Player{
         })
     }
 }
+const playerOne = new Player(1);
+const playerTwo = new Player(2);
+
+const assignNames = (fields) => {
+    if(fields.classList.contains("one")){
+        fields.innerText = playerNamesCustom[0].toUpperCase()
+        playerOne.name = playerNamesCustom[0]
+    }
+
+    else if (fields.classList.contains("two")){
+        fields.innerText = playerNamesCustom[1].toUpperCase()
+        playerTwo.name = playerNamesCustom[1]
+
+    }
+
+
+}
+
+/* #########|-- ${Class } -- ########  */
+
+
+
+
 
 //Creation Joueur
-const playerOne = new Player(1, "Player One");
-const playerTwo = new Player(2, "Player Two");
+
 
 /* #########|-- ${Function} -- ########  */
 
@@ -196,8 +223,35 @@ const showMessageNotification = (notif, message) => {
 //Load Dom Element
 
 document.addEventListener("DOMContentLoaded", (event)=> {
+
+    console.log("le dom est chargé")
+    btnP1Name.addEventListener("click", (e) => {
+        if (playerNamesCustom.length >0) return
+        e.preventDefault()
+        playerNamesCustom.push(p1Fields.value)
+        console.log('player1')
+        console.log(playerNamesCustom[0])
+        assignNames(document.querySelector("#P1"))
+        p1Fields.value = ""
+        p1Fields.style.display = "none"
+        btnP1Name.style.display = "none"
+
+    })
+    btnP2Name.addEventListener("click", (e) => {
+        e.preventDefault()
+        if (playerNamesCustom.length === 1) {
+            playerNamesCustom.push(p2Fields.value)
+            assignNames(document.querySelector("#P2"))
+            p2Fields.value = ""
+            p2Fields.style.display = "none"
+            btnP2Name.style.display = "none"
+        }
+        else return alert('Validez le joueur 1 en premier. (recharger la page)')
+
+    })
 // Init Game
     btnNewGame.addEventListener('click', () => {
+        if(playerNamesCustom.length !== 2) return alert("Indiquez les deux pseudo pour demarrer la partie (recharger la page)")
         domReset()
         playerOne.resetPlayer()
         playerTwo.resetPlayer()
